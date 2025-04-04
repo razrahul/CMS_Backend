@@ -13,6 +13,9 @@ exports.ERROR_MESSAGE = {
   CANNOT_BID_OWN_AUCTION: "You cannot bid on your own auction",
   BID_AMT_LESS: "Bid amount always grater than base amount",
   BID_ALREADY_APPLIED: "Bid already applied",
+  CONTACT_NOT_FOUND: "Contact not found",
+  CONTACT_ALREADY_EXIST: "Contact already exist",
+  CONTACT_ID_REQUIRED: "Contact id required",
 };
 
 exports.SUCCESS_MESSAGE = {
@@ -26,4 +29,11 @@ exports.SUCCESS_MESSAGE = {
   AUCTION_CREATED: "Auction created successfully",
   AUCTION_UPDATED: "Auction updated successfully",
   BID_CREATE: "Bid created successfully",
+  CONTACT_CREATED: "Contact created successfully",
+  CONTACT_UPDATED: "Contact updated successfully",
+  CONTACT_DELETED: "Contact deleted successfully",
+  CONTACT_FETCHED: "Contact fetched successfully",
+  
+  
+
 };

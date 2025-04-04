@@ -25,7 +25,7 @@ const Chats = sequelize.define(
       type: DataTypes.UUID,
       allowNull: true,
       references: {
-        model: Contacts,
+        model: "contacts",
         key: "uuId",
       },
     },

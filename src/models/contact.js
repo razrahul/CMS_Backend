@@ -1,4 +1,4 @@
-const { DataTypes, ENUM, Model } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConnect"); // Adjust the path to your database configuration
 
 const Chats = require("./chat");
@@ -17,7 +17,6 @@ const Contacts = sequelize.define(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       lowercase: true,
       trim: true,
       validate: {
@@ -45,7 +44,7 @@ const Contacts = sequelize.define(
       type: DataTypes.UUID,
       allowNull: true,
       references: {
-        model : Chats,
+        model : "chats",
         key : "uuId"
       }
     },
