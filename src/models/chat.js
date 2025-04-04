@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConnect");
 
+const Contacts = require("./contact");
+
 
 const BaseModel = require("./baseModel");
 
@@ -18,6 +20,14 @@ const Chats = sequelize.define(
     sender: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    contact:{
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: Contacts,
+        key: "uuId",
+      },
     },
     
     

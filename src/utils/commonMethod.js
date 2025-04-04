@@ -17,3 +17,5 @@ const tableSync = async () => {
 };
 
 module.exports = { tableSync };
+
+// await Chats.sync({ alter: true });
