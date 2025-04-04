@@ -3,6 +3,8 @@
 const Roles = require("./models/role");
 const Users = require("./models/user");
 const Companys = require("./models/company");
+const Chats = require("./models/chat");
+const Contacts = require("./models/contact");
 
 // Role and user (one to many)
 Users.belongsTo(Roles, { foreignKey: "roleId", targetKey: "uuId", as: "role" });
@@ -10,6 +12,17 @@ Roles.hasMany(Users, { foreignKey: "roleId",sourceKey: "uuId",  as: "users" });
 
 Users.belongsTo(Companys, { foreignKey: "company", targetKey: "uuId", as: "companyData" });
 Companys.hasMany(Users, { foreignKey: "company", sourceKey: "uuId", as: "users" });
+
+
+
+Contacts.associate = (models) => {
+    Contacts.hasMany(models.Chats, { foreignKey: 'contact' });
+};
+  
+Chats.associate = (models) => {
+    Chats.belongsTo(models.Contacts, { foreignKey: 'contact' });
+};
+
 
 
 
