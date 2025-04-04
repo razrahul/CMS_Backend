@@ -7,6 +7,7 @@ const Roles = require("./src/models/role");
 const Users = require("./src/models/user");
 const Companys = require("./src/models/company");
 const indexRouter = require("./src/routes/index");
+const { tableSync } = require("./src/utils/commonMethod");
 require('./src/associations');
 
 const app = express();
@@ -25,9 +26,10 @@ app.listen(PORT, async () => {
     //db connection check
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-    await Roles.sync({ force: false });
-    await Companys.sync({ force: false }); 
-    await Users.sync({ force: false });
+    // await Roles.sync({ force: false });
+    // await Companys.sync({ force: false }); 
+    // await Users.sync({ force: false });
+    await tableSync();
   } catch (error) {
     console.log("Error", error.message);
   }
