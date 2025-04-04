@@ -1,16 +1,15 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConnect");
 
-const Conatct = require("./contact");
 
 const BaseModel = require("./baseModel");
 
-const Chat = sequelize.define(
-  "Chat",
+const Chats = sequelize.define(
+  "Chats",
   {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
+      // autoIncrement: true,
     },
     requester: {
       type: DataTypes.STRING,
@@ -18,16 +17,10 @@ const Chat = sequelize.define(
     },
     sender: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    contact: {
-        type: DataTypes.UUID,
-        allowNull: true,
-        references: {
-            model: Conatct,
-            key: "uuId",
-        }
-    },
+    
+    
     ...BaseModel.rawAttributes,
   },
   {
@@ -35,4 +28,4 @@ const Chat = sequelize.define(
   }
 );
 
-module.exports = Chat;
+module.exports = Chats;
