@@ -52,8 +52,41 @@ const fetchLatestContacts = async (req, res) => {
   }
 }
 
+const statusChangeConatct = async (req, res) => {
+  try {
+    const {id } = req.params;
+    const { status } = req.body;
+    const result = await contactService.StatusChange(id, status);
+    sendSuccessResponse(res, SUCCESS_MESSAGE.CONTACT_STATUS_CHANGED, result, 200);
+  } catch (error) {
+    sendErrorResponse(
+      res,
+      error.message || ERROR_MESSAGE.SOMETHING_WENT_WRONG,
+      "",
+      500
+    );
+  }
+}
+
+const changeActivity = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await contactService.activity(id);
+    sendSuccessResponse(res, SUCCESS_MESSAGE.CONTACT_ACTIVITY_CHANGED, result, 200);
+  } catch (error) {
+    sendErrorResponse(
+      res,
+      error.message || ERROR_MESSAGE.SOMETHING_WENT_WRONG,
+      "",
+      500
+    );
+  }
+}
+
 module.exports = {
   Conatctcreate,
   featchAllContacts,
   fetchLatestContacts,
+  statusChangeConatct,
+  changeActivity,
 };
