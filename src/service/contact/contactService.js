@@ -11,10 +11,34 @@ const CreateContact = async (contactDetails) => {
         const result = await Contacts.create(contactDetails);
         return result;
     } catch (error) {
-        throw error;
+        throw new Error(error.message);
     }
 }
 
+const FeatchAllContacts = async () => {
+    try {
+        const result = await Contacts.findAll();
+        return result;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+const FetchLatestContacts = async () => {
+    try {
+      const result = await Contacts.findAll({
+        limit: 5,
+        order: [['createdAt', 'DESC']], // latest first
+      });
+      return result;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  
+
 module.exports = {
-    CreateContact
+    CreateContact,
+    FeatchAllContacts,
+    FetchLatestContacts,
 }
