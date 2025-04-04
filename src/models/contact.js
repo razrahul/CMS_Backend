@@ -1,13 +1,13 @@
 const { DataTypes, ENUM, Model } = require("sequelize");
-const sequelize = require("../config/database"); // Adjust the path to your database configuration
+const sequelize = require("../config/dbConnect"); // Adjust the path to your database configuration
 
-const Chat = require("./chat");
+const Chats = require("./chat");
 
 const BaseModel = require("./baseModel");
 
 
-const Contact = sequelize.define(
-  "Contact",
+const Contacts = sequelize.define(
+  "Contacts",
   {
     name: {
       type: DataTypes.STRING,
@@ -26,7 +26,7 @@ const Contact = sequelize.define(
     },
     phone: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       trim: true,
     },
     nationlity: {
@@ -36,7 +36,7 @@ const Contact = sequelize.define(
     },
     status: {
       type: DataTypes.STRING,
-      enum: ["request","process", "complete", "make a call"], // Define the allowed values for the status field
+      enum: ["request","proccess", "complete", "make a call"], // Define the allowed values for the status field
       defaultValue: "request", // Set the default value for the status field
       allowNull: false,
       trim: true,
@@ -45,7 +45,7 @@ const Contact = sequelize.define(
       type: DataTypes.UUID,
       allowNull: true,
       references: {
-        model : Chat,
+        model : Chats,
         key : "uuId"
       }
     },
@@ -58,4 +58,4 @@ const Contact = sequelize.define(
   }
 );
 
-module.exports = Contact;
+module.exports = Contacts;
