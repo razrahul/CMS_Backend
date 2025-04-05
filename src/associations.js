@@ -14,14 +14,17 @@ Users.belongsTo(Companys, { foreignKey: "company", targetKey: "uuId", as: "compa
 Companys.hasMany(Users, { foreignKey: "company", sourceKey: "uuId", as: "users" });
 
 
+Contacts.belongsTo(Chats, { foreignKey: "chat", targetKey: "uuId", as: "chatData" });
+Chats.hasMany(Contacts, { foreignKey: "chat", sourceKey: "uuId", as: "contacts" });
 
-Contacts.associate = (models) => {
-    Contacts.hasMany(models.Chats, { foreignKey: 'contact' });
-};
+
+// Contacts.associate = (models) => {
+//     Contacts.hasMany(models.Chats, { foreignKey: 'contact' });
+// };
   
-Chats.associate = (models) => {
-    Chats.belongsTo(models.Contacts, { foreignKey: 'contact' });
-};
+// Chats.associate = (models) => {
+//     Chats.belongsTo(models.Contacts, { foreignKey: 'contact' });
+// };
 
 
 

@@ -16,7 +16,10 @@ exports.ERROR_MESSAGE = {
   CONTACT_NOT_FOUND: "Contact not found",
   CONTACT_ALREADY_EXIST: "Contact already exist",
   CONTACT_ID_REQUIRED: "Contact id required",
-  CONTACT_NOT_UPDATE:"No contact found or status already set"
+  CONTACT_NOT_UPDATE:"No contact found or status already set",
+  CHAT_NOT_UPDATE:"No chat found or status already set",
+  CHAT_NOT_FOUND: "Chat not found",
+
 };
 
 exports.SUCCESS_MESSAGE = {
@@ -36,6 +39,15 @@ exports.SUCCESS_MESSAGE = {
   CONTACT_FETCHED: "Contact fetched successfully",
   CONTACT_STATUS_CHANGED: "Contact status changed successfully",
   CONTACT_ACTIVITY_CHANGED: "Contact Activity changed successfully",
+  CHAT_CREATED: "Chat created successfully",
+  CHAT_FETCHED: "Chat fetched successfully",
+  CHAT_UPDATED: "Chat updated successfully",
+  CHAT_DELETED: "Chat deleted successfully",
+  CHAT_STATUS_CHANGED: "Chat status changed successfully",
+  CHAT_ACTIVITY_CHANGED: "Chat Activity changed successfully",
+  CHAT_REPLAY: "Send Message successfully",
+  CHAT_ACTIVITY: "Chat activity changed successfully",
+  
   
   
 

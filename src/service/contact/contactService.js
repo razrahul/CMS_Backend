@@ -29,6 +29,13 @@ const FetchLatestContacts = async () => {
     const result = await Contacts.findAll({
       limit: 5,
       order: [["createdAt", "DESC"]], // latest first
+      include: [
+        {
+          model: Chats,
+          as: "chatData",
+          attributes: ["uuId","requester", "sender", "createdAt"],
+        },
+      ],
     });
     return result;
   } catch (error) {
