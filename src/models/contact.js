@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConnect"); // Adjust the path to your database configuration
 
 const Chats = require("./chat");
+const ContactLogs = require("./contactLog");
 
 const BaseModel = require("./baseModel");
 
@@ -38,7 +39,7 @@ const Contacts = sequelize.define(
       enum: ["request","proccess", "complete", "make a call"], // Define the allowed values for the status field
       defaultValue: "request", // Set the default value for the status field
       allowNull: false,
-      trim: true,
+      // trim: true,
     },
     chat: {
       type: DataTypes.UUID,
@@ -56,5 +57,58 @@ const Contacts = sequelize.define(
     tableName: "contacts",
   }
 );
+
+function getChangedFields(prev, current) {
+  const changed = [];
+  for (let key in current) {
+    if (
+      key !== "updatedAt" && key !== "createdAt" &&
+      JSON.stringify(prev[key]) !== JSON.stringify(current[key])
+    ) {
+      changed.push(key);
+    }
+  }
+  return changed;
+}
+
+Contacts.addHook("afterCreate", async (contact, options) => {
+  await ContactLogs.create({
+    contactId: contact.uuId,
+    action: "create",
+    changedFields: Object.keys(contact.toJSON()),
+    newData: contact.toJSON(),
+    performedBy: options.userId || null,
+    ipAddress: options.ip || null,
+    userAgent: options.userAgent || null,
+  });
+});
+
+Contacts.addHook("beforeUpdate", async (contact, options) => {
+  const previous = contact._previousDataValues;
+  const current = contact.dataValues;
+
+  await ContactLogs.create({
+    contactId: contact.uuId,
+    action: "update",
+    changedFields: getChangedFields(previous, current),
+    previousData: previous,
+    newData: current,
+    performedBy: options.userId || null,
+    ipAddress: options.ip || null,
+    userAgent: options.userAgent || null,
+  });
+});
+
+Contacts.addHook("beforeDestroy", async (contact, options) => {
+  await ContactLogs.create({
+    contactId: contact.uuId,
+    action: "delete",
+    previousData: contact.toJSON(),
+    performedBy: options.userId || null,
+    ipAddress: options.ip || null,
+    userAgent: options.userAgent || null,
+  });
+});
+
 
 module.exports = Contacts;
