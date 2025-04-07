@@ -19,6 +19,7 @@ exports.ERROR_MESSAGE = {
   CONTACT_NOT_UPDATE:"No contact found or status already set",
   CHAT_NOT_UPDATE:"No chat found or status already set",
   CHAT_NOT_FOUND: "Chat not found",
+  UNAUTHORIZED_SUPERADMIN: "You are not authorized to perform this action",
 
 };
 
