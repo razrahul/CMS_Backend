@@ -20,8 +20,11 @@ exports.ERROR_MESSAGE = {
   CHAT_NOT_UPDATE:"No chat found or status already set",
   CHAT_NOT_FOUND: "Chat not found",
   UNAUTHORIZED_SUPERADMIN: "You are not authorized to perform this action",
+  ROLE_NOT_FOUND: "Role not found",
+  COMPANY_NOT_FOUND: "Company not found",
 
-};
+
+};  
 
 exports.SUCCESS_MESSAGE = {
   DATA_FETCH_SUCCESSFULLY: "Data fetch successfully",
@@ -48,6 +51,11 @@ exports.SUCCESS_MESSAGE = {
   CHAT_ACTIVITY_CHANGED: "Chat Activity changed successfully",
   CHAT_REPLAY: "Send Message successfully",
   CHAT_ACTIVITY: "Chat activity changed successfully",
+  ROLES_FETCHED: "Roles fetched successfully",
+  COMPANYS_FETCHED: "Companys fetched successfully",
+  ROLE_ACTIVITY_UPDATED: "Role activity updated successfully",
+  COMPANY_ACTIVITY_UPDATED: "Company activity updated successfully",
+  
   
   
   

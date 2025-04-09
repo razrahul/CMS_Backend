@@ -23,6 +23,7 @@ jspm_packages/
 # Environment variables
 .env
 .env.production
+.env.staging
 
 # IDEs and editors
 .idea/
@@ -36,3 +37,4 @@ jspm_packages/
 # OS generated files
 .DS_Store
 Thumbs.db
+.env.staging
