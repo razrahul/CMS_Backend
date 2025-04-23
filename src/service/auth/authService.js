@@ -196,6 +196,9 @@ const loginUser = async (email, password, rememberPassword) => {
       where: {
         email: email,
       },
+      attributes: {
+        exclude: [ "verifyAccountToken", "verifyAccountExpires"] // ⛔ Exclude sensitive fields
+      },
       include: [
         {
           model: Roles,
@@ -244,8 +247,39 @@ const loginUser = async (email, password, rememberPassword) => {
   }
 };
 
+const getAllUsers = async () => {
+  try {
+    const users = await Users.findAll({
+      attributes: {
+        exclude: ["password", "verifyAccountToken", "verifyAccountExpires"] // ⛔ Exclude sensitive fields
+      },
+      include: [
+        {
+          model: Roles,
+          as: "role", // Same as association alias
+          attributes: ["uuId", "name"]
+        },
+        {
+          model: Companys,
+          as: "companyData", // ✅ Use correct alias
+          attributes: ["uuId", "name"]
+        }
+      ]
+    });
+
+    // Add derived status without modifying DB
+    users.forEach(user => {
+      user.dataValues.accountStatus = user.isActive ? "Active" : "UnActive";
+    });
+    return users;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
 module.exports = {
   saveUser,
   verifyAccountUser,
   loginUser,
+  getAllUsers
 };

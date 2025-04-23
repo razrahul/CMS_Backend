@@ -75,8 +75,23 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const result = await authService.getAllUsers();
+    sendSuccessResponse(res, SUCCESS_MESSAGE.USER_LIST, result, 200);
+  } catch (error) {
+    sendErrorResponse(
+      res,
+      error.message || ERROR_MESSAGE.SOMETHING_WENT_WRONG,
+      "",
+      500
+    );
+  }
+};
+
 module.exports = {
     registerUser,
     verifyAccount,
     loginUser,
+    getAllUsers,
 }

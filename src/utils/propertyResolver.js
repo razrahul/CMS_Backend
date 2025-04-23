@@ -55,6 +55,7 @@ exports.SUCCESS_MESSAGE = {
   COMPANYS_FETCHED: "Companys fetched successfully",
   ROLE_ACTIVITY_UPDATED: "Role activity updated successfully",
   COMPANY_ACTIVITY_UPDATED: "Company activity updated successfully",
+  USER_LIST: "User list fetched successfully",
   
   
   

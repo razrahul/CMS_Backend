@@ -201,6 +201,18 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  /auth/users:
+    get:
+      tags:
+        - auth
+      summary: featch all users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
   /chat/create/{id}:
     post:
       tags:
