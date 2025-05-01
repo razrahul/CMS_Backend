@@ -22,6 +22,7 @@ exports.ERROR_MESSAGE = {
   UNAUTHORIZED_SUPERADMIN: "You are not authorized to perform this action",
   ROLE_NOT_FOUND: "Role not found",
   COMPANY_NOT_FOUND: "Company not found",
+  USER_NOT_FOUND: "User Not found"
 
 
 };  
@@ -56,6 +57,7 @@ exports.SUCCESS_MESSAGE = {
   ROLE_ACTIVITY_UPDATED: "Role activity updated successfully",
   COMPANY_ACTIVITY_UPDATED: "Company activity updated successfully",
   USER_LIST: "User list fetched successfully",
+  USER_ACTIVITY_CHANGE: "User Activity Change",
   
   
   
