@@ -58,9 +58,9 @@ exports.SUCCESS_MESSAGE = {
   COMPANY_ACTIVITY_UPDATED: "Company activity updated successfully",
   USER_LIST: "User list fetched successfully",
   USER_ACTIVITY_CHANGE: "User Activity Change",
-  
-  
-  
+  VISITOR_INCREASE: "Visitor Count increased successfully",
+  FEATCH_STATS: "Stats fetched successfully",
+
   
 
 };

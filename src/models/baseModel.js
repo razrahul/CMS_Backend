@@ -12,6 +12,7 @@ const BaseModel = sequelize.define(
     },
     createdBy: {
       type: DataTypes.INTEGER,
+      defaultValue: 1,
       allowNull: false,
     },
     updatedBy: {
