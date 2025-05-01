@@ -277,9 +277,37 @@ const getAllUsers = async () => {
   }
 }
 
+
+const userVerificationToggle = async (id, user) => {
+  try {
+    const user = await Users.findOne({
+      where: {
+        uuId: id
+      },
+      attributes: { exclude: ["password", "verifyAccountToken", "verifyAccountExpires"] }, // ✅ Exclude password:
+    })
+    if (!user) {
+      throw new Error(ERROR_MESSAGE.USER_NOT_FOUND)
+    }
+    //  console.log(user.uuId, "user");
+     
+    await user.update(
+      {
+        isActive: !user.isActive,
+        updatedBy: user.uuId
+      }
+    );
+
+    return user;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
 module.exports = {
   saveUser,
   verifyAccountUser,
   loginUser,
-  getAllUsers
+  getAllUsers,
+  userVerificationToggle
 };

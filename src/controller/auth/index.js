@@ -89,9 +89,31 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const userverifaction = async(req, res) => {
+  try {
+    
+    const {id} = req.params;
+
+    // console.log(req.user, "req.user");
+    
+
+    const result = await authService.userVerificationToggle(id, req.user);
+
+    sendSuccessResponse(res, SUCCESS_MESSAGE.USER_ACTIVITY_CHANGE, result, 200)
+  } catch (error) {
+    sendErrorResponse(
+      res,
+      error.message || ERROR_MESSAGE.SOMETHING_WENT_WRONG,
+      "",
+      500
+    );
+  }
+};
+
 module.exports = {
     registerUser,
     verifyAccount,
     loginUser,
     getAllUsers,
+    userverifaction,
 }
