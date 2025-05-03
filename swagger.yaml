@@ -42,6 +42,7 @@ tags:
   - name: auth
   - name: chat
   - name: admin
+  - name: stats
 paths:
   /contact/create:
     post:
@@ -213,6 +214,27 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  /auth/verifation/{id}:
+    put:
+      tags:
+        - auth
+      summary: Activity change ( verification)
+      requestBody:
+        content: {}
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 33dbfd4b-b593-40ee-88b4-9baa5a5ad989
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
   /chat/create/{id}:
     post:
       tags:
@@ -330,6 +352,56 @@ paths:
       summary: get All companies
       security:
         - noauthAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /stats/visit:
+    post:
+      tags:
+        - stats
+      summary: create visitor
+      requestBody:
+        content: {}
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /stats/today:
+    get:
+      tags:
+        - stats
+      summary: today stats
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /stats/all:
+    get:
+      tags:
+        - stats
+      summary: all stats
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /stats/week:
+    get:
+      tags:
+        - stats
+      summary: week stats
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Successful response

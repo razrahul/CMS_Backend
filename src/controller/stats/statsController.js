@@ -39,6 +39,21 @@ const getTodayStats = async (req, res) => {
   }
 };
 
+//get week’s stats
+const getWeekStats = async (req, res) => {
+  try {
+    const result = await statsService.fetchWeekStats();
+    sendSuccessResponse(res, SUCCESS_MESSAGE.FEATCH_STATS, result, 200);
+  } catch (error) {
+    sendErrorResponse(
+      res,
+      error.message || ERROR_MESSAGE.SOMETHING_WENT_WRONG,
+      "",
+      500
+    );
+  }
+};
+
 // Fetch all stats date-wise
 const getAllStats = async (req, res) => {
     try {
@@ -58,4 +73,5 @@ module.exports = {
     createVisitors,
     getAllStats,
     getTodayStats,
+    getWeekStats,
 };

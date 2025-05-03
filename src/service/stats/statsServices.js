@@ -41,6 +41,34 @@ const fetchTodayStats = async () => {
     }
 };
 
+// featch week's stats
+
+
+
+const fetchWeekStats = async () => {
+    try {
+      const today = getsToday(); // 'YYYY-MM-DD'
+      const weekAgo = new Date();
+      weekAgo.setDate(new Date(today).getDate() - 6);
+      const weekAgoStr = weekAgo.toISOString().split('T')[0];
+  
+      const weekStats = await Stats.findAll({
+        where: {
+          date: {
+            [Op.between]: [weekAgoStr, today],
+          },
+        },
+        order: [['date', 'ASC']],
+      });
+  
+      return weekStats;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  
+
+
 // featch all stats date wise
 const fetchAllStats = async () => {
     try {
@@ -86,6 +114,7 @@ module.exports = {
     updateRespondents,
     updateReached,
     fetchTodayStats,
+    fetchWeekStats
 };
 
 
