@@ -377,7 +377,7 @@ paths:
         - stats
       summary: today stats
       security:
-        - noauthAuth: []
+        - bearerAuth: []
       responses:
         '200':
           description: Successful response
@@ -389,7 +389,7 @@ paths:
         - stats
       summary: all stats
       security:
-        - noauthAuth: []
+        - bearerAuth: []
       responses:
         '200':
           description: Successful response
@@ -401,7 +401,7 @@ paths:
         - stats
       summary: week stats
       security:
-        - noauthAuth: []
+        - bearerAuth: []
       responses:
         '200':
           description: Successful response
