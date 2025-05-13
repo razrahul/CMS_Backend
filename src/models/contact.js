@@ -36,7 +36,7 @@ const Contacts = sequelize.define(
     },
     status: {
       type: DataTypes.STRING,
-      enum: ["request","proccess", "complete", "make a call"], // Define the allowed values for the status field
+      enum: ["request","replyed","make a call", "complete" ], // Define the allowed values for the status field
       defaultValue: "request", // Set the default value for the status field
       allowNull: false,
       // trim: true,
@@ -48,6 +48,14 @@ const Contacts = sequelize.define(
         model : "chats",
         key : "uuId"
       }
+    },
+    makeACall: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+      validate: {
+        isDate: true,
+      },
     },
 
     ...BaseModel.rawAttributes,

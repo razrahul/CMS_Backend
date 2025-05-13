@@ -86,10 +86,33 @@ const activity = async (id) => {
   }
 };
 
+const makeCallSateus = async (id, date, user) => {
+  try {
+    console.log(user.uuId, "user");
+    
+    const [affectedRows] = await Contacts.update(
+      {
+        makeACall: date,
+        updatedBy: user.uuId,
+      },
+      {
+        where: { uuId: id },
+      }
+    );
+    if (affectedRows === 0) {
+      throw new Error(ERROR_MESSAGE.CONTACT_NOT_UPDATE);
+    }
+    return { uuId: id, date, updated: affectedRows };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   CreateContact,
   FeatchAllContacts,
   FetchLatestContacts,
   StatusChange,
   activity,
+  makeCallSateus,
 };
