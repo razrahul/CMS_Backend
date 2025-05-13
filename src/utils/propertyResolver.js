@@ -60,6 +60,7 @@ exports.SUCCESS_MESSAGE = {
   USER_ACTIVITY_CHANGE: "User Activity Change",
   VISITOR_INCREASE: "Visitor Count increased successfully",
   FEATCH_STATS: "Stats fetched successfully",
+  CONTACT_CALL_STATUS_CHANGED: "Contact call status upadte successfully",
 
   
 

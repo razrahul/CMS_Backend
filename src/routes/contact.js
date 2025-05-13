@@ -11,6 +11,9 @@ router.get('/latest',authenticateToken,authorize(['Admin', "SuperAdmin"]), conta
 router.put('/status/:id', contactController.statusChangeConatct);
 router.put('/activity/:id', contactController.changeActivity);
 
+//make a call 
+router.put('/call/:id', authenticateToken, authorize(['Admin', "SuperAdmin"]), contactController.makeACallSateUs);
+
 
 
 module.exports = router;

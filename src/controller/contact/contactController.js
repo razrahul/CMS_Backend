@@ -83,10 +83,28 @@ const changeActivity = async (req, res) => {
   }
 }
 
+const makeACallSateUs = async (req, res ) => {
+  try {
+    const {id} = req.params;
+    const {date} = req.body;
+
+    const result = await contactService.makeCallSateus(id, date, req.user);
+    sendSuccessResponse(res, SUCCESS_MESSAGE.CONTACT_CALL_STATUS_CHANGED, result, 200);
+  } catch (error) {
+    sendErrorResponse(
+      res,
+      error.message || ERROR_MESSAGE.SOMETHING_WENT_WRONG,
+      "",
+      500
+    );
+  }
+}
+
 module.exports = {
   Conatctcreate,
   featchAllContacts,
   fetchLatestContacts,
   statusChangeConatct,
   changeActivity,
+  makeACallSateUs,
 };

@@ -11,16 +11,16 @@ const BaseModel = sequelize.define(
       primaryKey: true,
     },
     createdBy: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       defaultValue: 1,
       allowNull: false,
     },
     updatedBy: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     deletedBy: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     isActive: {
