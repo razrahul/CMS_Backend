@@ -26,7 +26,8 @@ const ChatCreate = async (req, res) => {
 const ChatReply = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await chatService.replyToMessage(id, req.body);
+    const user = req.user;
+    const result = await chatService.replyToMessage(id, req.body, user);
     sendSuccessResponse(res, SUCCESS_MESSAGE.CHAT_REPLAY, result, 200);
   } catch (error) {
     sendErrorResponse(

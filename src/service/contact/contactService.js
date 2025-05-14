@@ -28,16 +28,31 @@ const FetchLatestContacts = async () => {
   try {
     const result = await Contacts.findAll({
       limit: 5,
-      order: [["createdAt", "DESC"]], // latest first
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: Chats,
           as: "chatData",
-          attributes: ["uuId","requester", "sender", "createdAt"],
+          attributes: ["uuId", "requester", "sender", "createdAt", "updatedAt", "updatedBy"],
         },
       ],
     });
-    return result;
+
+    const formatted = result.map((item) => {
+      const data = item.toJSON();
+
+      if (typeof data.chatData?.sender === "string") {
+        try {
+          data.chatData.sender = JSON.parse(data.chatData.sender);
+        } catch (e) {
+          // Keep as-is if not valid JSON
+        }
+      }
+
+      return data;
+    });
+
+    return formatted;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -56,12 +71,9 @@ const StatusChange = async (id, status) => {
       }
     );
     if (affectedRows === 0) {
-        throw new Error(ERROR_MESSAGE.CONTACT_NOT_UPDATE);
-      }
-    return  { uuId:id,
-        status,
-        isActive,
-        updated: affectedRows,};
+      throw new Error(ERROR_MESSAGE.CONTACT_NOT_UPDATE);
+    }
+    return { uuId: id, status, isActive, updated: affectedRows };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -69,8 +81,7 @@ const StatusChange = async (id, status) => {
 
 const activity = async (id) => {
   try {
-   
-    const conatct = await Contacts.findOne({where: {uuId: id}});
+    const conatct = await Contacts.findOne({ where: { uuId: id } });
 
     if (!conatct) {
       throw new Error(ERROR_MESSAGE.CONTACT_NOT_FOUND);
@@ -80,7 +91,6 @@ const activity = async (id) => {
     await conatct.save(); // Save the updated status to the database
 
     return conatct; // Return the updated contact
-    
   } catch (error) {
     throw new Error(error.message);
   }
@@ -89,7 +99,7 @@ const activity = async (id) => {
 const makeCallSateus = async (id, date, user) => {
   try {
     console.log(user.uuId, "user");
-    
+
     const [affectedRows] = await Contacts.update(
       {
         makeACall: date,
