@@ -137,6 +137,32 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  /contact/call/{id}:
+    put:
+      tags:
+        - conatct
+      summary: make a call
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                date: '2025-05-28'
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+          example: f3957c2d-b94f-4aad-8428-ab18547491c0
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
   /auth/verify-account/{token}:
     get:
       tags:
@@ -263,7 +289,7 @@ paths:
           content:
             application/json: {}
   /chat/reply/{id}:
-    put:
+    post:
       tags:
         - chat
       summary: reply send
