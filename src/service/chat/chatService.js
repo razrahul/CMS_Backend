@@ -31,27 +31,51 @@ const CreateChat = async (id, chatDetails) => {
   }
 };
 
-const  replyToMessage = async (id, replyDetails) => {
+const replyToMessage = async (id, replyDetails, user) => {
   try {
     const { message } = replyDetails;
-    const [affectedRows ] = await Chats.update({
-     sender:message,
-    },
-    {
-        where: { uuId: id },
-    });
-    if (affectedRows === 0) {
-        throw new Error(ERROR_MESSAGE.CHAT_NOT_UPDATE);
+
+    const chat = await Chats.findOne({ where: { uuId: id } });
+
+    if (!chat) {
+      throw new Error(ERROR_MESSAGE.CHAT_NOT_FOUND);
     }
+
+    let existingSenders;
+
+    if (Array.isArray(chat.sender)) {
+      console.log("array");
+      
+      existingSenders = chat.sender;
+    } else if (typeof chat.sender === "string") {
+      try {
+        existingSenders = JSON.parse(chat.sender);
+        if (!Array.isArray(existingSenders)) existingSenders = [];
+      } catch (e) {
+        existingSenders = [];
+      }
+    } else {
+      existingSenders = [];
+    }
+
+    existingSenders.push(message);
+
+    chat.sender = existingSenders;
+    chat.updatedBy = user?.uuId;
+    await chat.save();
+
     return {
-        uuId: id,
-        sender: message,
-        updated: affectedRows,
+      uuId: id,
+      sender: chat.sender,
+      updated: true,
     };
   } catch (error) {
     throw new Error(error.message);
   }
 };
+
+
+
 
 
 const Activity = async (id) => {

@@ -3,7 +3,6 @@ const sequelize = require("../config/dbConnect");
 
 const Contacts = require("./contact");
 
-
 const BaseModel = require("./baseModel");
 
 const Chats = sequelize.define(
@@ -18,10 +17,10 @@ const Chats = sequelize.define(
       allowNull: false,
     },
     sender: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: true,
     },
-    contact:{
+    contact: {
       type: DataTypes.UUID,
       allowNull: true,
       references: {
@@ -29,8 +28,7 @@ const Chats = sequelize.define(
         key: "uuId",
       },
     },
-    
-    
+
     ...BaseModel.rawAttributes,
   },
   {
