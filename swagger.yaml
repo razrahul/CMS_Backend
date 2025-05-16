@@ -102,7 +102,7 @@ paths:
             schema:
               type: object
               example:
-                status: proccess
+                status: complete
       security:
         - noauthAuth: []
       parameters:
@@ -111,6 +111,7 @@ paths:
           schema:
             type: string
           required: true
+          example: 07265fb6-7c4d-4e98-9d2d-84cba2f508a0
       responses:
         '200':
           description: Successful response
@@ -131,7 +132,7 @@ paths:
           schema:
             type: string
           required: true
-          example: f3957c2d-b94f-4aad-8428-ab18547491c0
+          example: 07265fb6-7c4d-4e98-9d2d-84cba2f508a0
       responses:
         '200':
           description: Successful response
@@ -142,22 +143,22 @@ paths:
       tags:
         - conatct
       summary: make a call
-      security:
-        - bearerAuth: []
       requestBody:
         content:
           application/json:
             schema:
               type: object
               example:
-                date: '2025-05-28'
+                date: '2025-05-30'
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
           schema:
             type: string
           required: true
-          example: f3957c2d-b94f-4aad-8428-ab18547491c0
+          example: 07265fb6-7c4d-4e98-9d2d-84cba2f508a0
       responses:
         '200':
           description: Successful response
@@ -299,16 +300,16 @@ paths:
             schema:
               type: object
               example:
-                message: teat for reply send
+                message: teat for reply6 send
       security:
-        - noauthAuth: []
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
           schema:
             type: string
           required: true
-          example: e913b695-0298-40fc-9d1e-03d0813744ee
+          example: 45dc290d-5d09-46a2-b30c-b24d64ff06e9
       responses:
         '200':
           description: Successful response
