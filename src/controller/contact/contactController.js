@@ -9,10 +9,15 @@ const {
   sendErrorResponse,
 } = require("../../utils/response");
 
+const statsService = require("../../service/stats/statsServices");
+
 
 const Conatctcreate = async (req, res) => {
   try {
     const result = await contactService.CreateContact(req.body);
+    if (result){
+      await statsService.updateReached();
+    }
     sendSuccessResponse(res, SUCCESS_MESSAGE.CONTACT_CREATED, result, 200);
   } catch (error) {
     sendErrorResponse(
