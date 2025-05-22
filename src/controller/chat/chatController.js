@@ -8,6 +8,8 @@ const {
   sendErrorResponse,
 } = require("../../utils/response");
 
+const statsService = require("../../service/stats/statsServices");
+
 const ChatCreate = async (req, res) => {
   try {
     const { id } = req.params;
@@ -28,6 +30,9 @@ const ChatReply = async (req, res) => {
     const { id } = req.params;
     const user = req.user;
     const result = await chatService.replyToMessage(id, req.body, user);
+    if (result) {
+       await statsService.updateRespondents();
+    }
     sendSuccessResponse(res, SUCCESS_MESSAGE.CHAT_REPLAY, result, 200);
   } catch (error) {
     sendErrorResponse(
