@@ -5,6 +5,9 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV || "development"}`,
 });
 
+const sendMail = require("../mail/mailService");
+const moment = require("moment"); // Make sure moment is installed
+
 const CreateContact = async (contactDetails) => {
   try {
     // const {name, email, phone, message} = contactDetails;
@@ -96,27 +99,133 @@ const activity = async (id) => {
   }
 };
 
+// const makeCallSateus = async (id, date, user) => {
+//   try {
+//     console.log(user.uuId, "user");
+
+//     const [affectedRows] = await Contacts.update(
+//       {
+//         makeACall: date,
+//         updatedBy: user.uuId,
+//       },
+//       {
+//         where: { uuId: id },
+//       }
+//     );
+//     if (affectedRows === 0) {
+//       throw new Error(ERROR_MESSAGE.CONTACT_NOT_UPDATE);
+//     }
+//     return { uuId: id, date, updated: affectedRows };
+//   } catch (error) {
+//     throw new Error(error.message);
+//   }
+// };
+
 const makeCallSateus = async (id, date, user) => {
   try {
-    console.log(user.uuId, "user");
+    const contact = await Contacts.findOne({ where: { uuId: id } });
 
-    const [affectedRows] = await Contacts.update(
-      {
-        makeACall: date,
-        updatedBy: user.uuId,
-      },
-      {
-        where: { uuId: id },
-      }
-    );
-    if (affectedRows === 0) {
-      throw new Error(ERROR_MESSAGE.CONTACT_NOT_UPDATE);
+    if (!contact) {
+      throw new Error(ERROR_MESSAGE.CONTACT_NOT_FOUND);
     }
-    return { uuId: id, date, updated: affectedRows };
+
+    // Update fields
+    contact.makeACall = date || contact.makeACall;
+    contact.updatedBy = user.uuId || contact.updatedBy;
+
+    await contact.save(); // This will persist changes to the DB
+
+    const formattedDate = moment(contact.makeACall).format("dddd, MMMM Do YYYY, h:mm A");
+
+    const emailHtml = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Scheduled Call</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          padding: 20px;
+          color: #333;
+        }
+        .container {
+          max-width: 600px;
+          background-color: #fff;
+          margin: auto;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+          background-color: #2196F3;
+          padding: 15px;
+          color: white;
+          text-align: center;
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+        }
+        .content {
+          padding: 20px;
+          text-align: center;
+        }
+        .footer {
+          font-size: 14px;
+          color: #888;
+          text-align: center;
+          margin-top: 20px;
+        }
+        .button {
+          background-color: #2196F3;
+          color: white;
+          padding: 10px 25px;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+        }
+        @media only screen and (max-width: 600px) {
+          .container {
+            width: 100%;
+            padding: 10px;
+          }
+          .button {
+            padding: 8px 18px;
+            font-size: 14px;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h2>Call Scheduled</h2>
+        </div>
+        <div class="content">
+          <p>Hello ${contact.name},</p>
+          <p>We have successfully scheduled a call with you.</p>
+          <p><strong>Call Date & Time:</strong></p>
+          <p style="font-size: 18px; color: #2196F3;">${formattedDate}</p>
+          <p>If you have any questions or need to reschedule, feel free to reach out.</p>
+          <a href="mailto:support@cms-app.com" class="button">Contact Support</a>  
+        </div>
+        <div class="footer">
+          <p>This is an automated message from CMS App.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+    // TODO: replace with actual email sending logic
+    await sendMail(contact.email, "Call Scheduled with CMS App", emailHtml);
+
+    return { uuId: contact.uuId, date: contact.makeACall, updated: 1 };
   } catch (error) {
+    console.error(error);
     throw new Error(error.message);
   }
 };
+
 
 module.exports = {
   CreateContact,
